@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppMvcBasica.Data;
 using AppMvcBasica.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppMvcBasica.Controllers
 {
+    [Authorize]
     public class ProdutosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -18,6 +20,7 @@ namespace AppMvcBasica.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         // GET: Produtos
         public async Task<IActionResult> Index()
         {
@@ -25,6 +28,7 @@ namespace AppMvcBasica.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [AllowAnonymous]
         // GET: Produtos/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -87,6 +91,7 @@ namespace AppMvcBasica.Controllers
         }
 
         // POST: Produtos/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
